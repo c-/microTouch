@@ -814,10 +814,10 @@
   )
 
   (symbol (lib_id "Device:LED") (at 105.41 82.55 180) (unit 1)
-    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (in_bom yes) (on_board yes)
     (uuid 7408d9bb-2040-4db4-9f32-e25e485fbe0e)
-    (property "Reference" "D1" (id 0) (at 105.7909 76.4245 0))
-    (property "Value" "LED" (id 1) (at 105.7909 79.1996 0))
+    (property "Reference" "D1" (id 0) (at 105.7909 85.3145 0))
+    (property "Value" "LED" (id 1) (at 105.7909 88.0896 0))
     (property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder" (id 2) (at 105.41 82.55 0)
       (effects (font (size 1.27 1.27)) hide)
     )

@@ -1,4 +1,4 @@
 all:
-	pcb2cnc --isolation=5mm \
+	pcb2cnc --isolation=12mm \
 		--thickness=1.6 \
-		--cutw=0.8 --cutw=0.5 --cutw=0.2 --machine=bungard
+		--cutw=0.8 --cutw=0.3 --machine=bungard
