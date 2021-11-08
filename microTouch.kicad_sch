@@ -739,7 +739,7 @@
     (uuid addec1fb-b8e8-4fc7-8f03-f3f97a48f7fe)
     (property "Reference" "R1" (id 0) (at 86.36 58.7969 90))
     (property "Value" "220" (id 1) (at 86.36 61.572 90))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (id 2) (at 86.36 63.5 0)
+    (property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" (id 2) (at 86.36 63.5 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 86.36 63.5 0)
@@ -754,7 +754,7 @@
     (uuid d6cfadea-d8b7-4535-b6c3-a7d2fdbcf92b)
     (property "Reference" "R2" (id 0) (at 105.41 68.9569 90))
     (property "Value" "1K" (id 1) (at 105.41 71.732 90))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (id 2) (at 105.41 73.66 0)
+    (property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" (id 2) (at 105.41 73.66 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 105.41 73.66 0)
@@ -769,7 +769,7 @@
     (uuid 6ec2e99d-5757-45f7-89ab-e4a3e466c2e0)
     (property "Reference" "R3" (id 0) (at 114.3 77.8469 90))
     (property "Value" "2K2" (id 1) (at 114.3 80.622 90))
-    (property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" (id 2) (at 114.3 82.55 0)
+    (property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" (id 2) (at 114.3 82.55 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 114.3 82.55 0)
@@ -818,7 +818,7 @@
     (uuid 7408d9bb-2040-4db4-9f32-e25e485fbe0e)
     (property "Reference" "D1" (id 0) (at 105.7909 85.3145 0))
     (property "Value" "LED" (id 1) (at 105.7909 88.0896 0))
-    (property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder" (id 2) (at 105.41 82.55 0)
+    (property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" (id 2) (at 105.41 82.55 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 105.41 82.55 0)
@@ -891,7 +891,7 @@
       (reference "#PWR01") (unit 1) (value "GND") (footprint "")
     )
     (path "/7408d9bb-2040-4db4-9f32-e25e485fbe0e"
-      (reference "D1") (unit 1) (value "LED") (footprint "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder")
+      (reference "D1") (unit 1) (value "LED") (footprint "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder")
     )
     (path "/0c5ed85d-1f3f-4d6f-ab20-e65b16190c7b"
       (reference "H1") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3")
@@ -906,13 +906,13 @@
       (reference "J2") (unit 1) (value "PRINTER") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical")
     )
     (path "/addec1fb-b8e8-4fc7-8f03-f3f97a48f7fe"
-      (reference "R1") (unit 1) (value "220") (footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder")
+      (reference "R1") (unit 1) (value "220") (footprint "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder")
     )
     (path "/d6cfadea-d8b7-4535-b6c3-a7d2fdbcf92b"
-      (reference "R2") (unit 1) (value "1K") (footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder")
+      (reference "R2") (unit 1) (value "1K") (footprint "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder")
     )
     (path "/6ec2e99d-5757-45f7-89ab-e4a3e466c2e0"
-      (reference "R3") (unit 1) (value "2K2") (footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder")
+      (reference "R3") (unit 1) (value "2K2") (footprint "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder")
     )
     (path "/a4631f7f-c98e-425f-863a-b5265e18ace0"
       (reference "U1") (unit 1) (value "T1302") (footprint "microTouch:T1302")
