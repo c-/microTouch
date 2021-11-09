@@ -1,4 +1,4 @@
-part = "cover";	// [cover, flag]
+part = "flag";	// [cover, flag]
 
 pcbt = 1.6;
 $fn = 72;
@@ -29,25 +29,30 @@ module interrupter() {
 }
 
 module flag() {
-	w = 3;
+	w = 2;
 	h = 4;
 	
 	rotate([0,90,0]) difference() {
 		union() {
 			hull() {
-				translate([.1,0,1.5]) cylinder(d=w,h=3);
-				translate([7.8-w,0,1.5]) cylinder(d=w,h=3);
+				translate([.1,0,1.5]) cylinder(d=w,h=4);
+				translate([7-w,0,1.5]) cylinder(d=w,h=3);
 			}
 			
 			// this is also an alignment pin for the plunger
-			translate([-1.8,-w/2,-h]) cube([2,w,14]);
+			translate([-1.9,-w/2,1.5])
+			hull() {
+				cube([h,w,7]);
+				ww = w*2;
+				translate([0,-(ww-w)/2,7]) cube([h,ww,0.1]);
+			}
 			
-			translate([0.1,0,7.5]) hull() {
-				translate([0,-(10-h)/2,0]) cylinder(d=h,h=7);
-				translate([0,(10-h)/2,0]) cylinder(d=h,h=7);
+			translate([0.1,0,8.5]) hull() {
+				translate([0,-(12-h)/2,0]) cylinder(d=h,h=7);
+				translate([0,(12-h)/2,0]) cylinder(d=h,h=7);
 			}
 		}
-		translate([0,0,9]) cylinder(d=2.5,h=20);
+		translate([0,0,12]) cylinder(d=3,h=20);
 	}
 }
 
@@ -60,9 +65,10 @@ module cover() {
 			translate([29+t,5/2,-pcbt]) cylinder(d=5,h=10+t+pcbt);
 		}
 		
-		translate([0,t+(13-10.5)/2,0]) cube([31.5,10.5,10.5]);
-		translate([6.5,-10,-pcbt]) cube([22,35,pcbt*3]);
-		translate([27.25,t+2.5,0]) cube([4,10,10.5]);	// gear clearance
+		translate([0,t+(13-10.5)/2,0]) cube([31,10.5,10.5]);
+		translate([6,-10,-pcbt]) cube([22,35,pcbt*3]);
+		translate([27,t+2.5,-3]) cube([4,10,10.5]);	// gear clearance
+		translate([0,-10,-pcbt]) cube([31,35,pcbt]);
 		
 		translate([0,t,0]) difference() {
 			cube([7,13,10.5]);
@@ -77,7 +83,11 @@ module cover() {
 			translate([11,0,0]) cylinder(d=4,h=10+t);
 		}
 		
-		translate([0,-10,-pcbt]) cube([31.25,35,pcbt]);
+		// slot for flag to slide along
+		translate([6.25,(13+t*2)/2,10.5-4.5/2]) rotate([0,90,0]) hull() {
+			translate([0,-(12.4-4.5)/2,0]) cylinder(d=4.5,h=17);
+			translate([0,(12.4-4.5)/2,0]) cylinder(d=4.5,h=17);
+		}
 	}
 }
 
@@ -86,11 +96,11 @@ if( part == "flag" ) {
 } else if( part == "cover" ) {
 	cover();
 } else {
-	*pcb();
+	pcb();
 	translate([34.8,27.5,pcbt]) servo();
 	translate([.65,9,pcbt]) color("darkgray") interrupter();
 	translate([-0.75, 15.5, 6+pcbt+2]) flag();
 	color("gray")
 		translate([10,15.5,pcbt+7.9]) rotate([0,90,0]) cylinder(d=3,h=30);
-	*%translate([0,7.7,pcbt]) cover();
+	%translate([0,7.7,pcbt]) cover();
 }
