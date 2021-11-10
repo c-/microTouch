@@ -1,4 +1,4 @@
-part = "flag";	// [cover, flag]
+part = "cover";	// [cover, flag]
 
 pcbt = 1.6;
 $fn = 72;
@@ -67,8 +67,9 @@ module cover() {
 		
 		translate([0,t+(13-10.5)/2,0]) cube([31,10.5,10.5]);
 		translate([6,-10,-pcbt]) cube([22,35,pcbt*3]);
-		translate([27,t+2.5,-3]) cube([4,10,10.5]);	// gear clearance
 		translate([0,-10,-pcbt]) cube([31,35,pcbt]);
+
+		translate([27.5,t+2.5,-2]) cube([4,10,12.5]);	// gear clearance
 		
 		translate([0,t,0]) difference() {
 			cube([7,13,10.5]);
