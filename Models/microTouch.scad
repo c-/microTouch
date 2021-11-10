@@ -1,10 +1,12 @@
-part = "cover";	// [cover, flag]
+part = "all";	// [cover, flag]
 
 pcbt = 1.6;
+t = 1.5;
+
 $fn = 72;
 
 module servo() {
-	color("blue") import("micro linear servo.stl");
+	color("white") import("micro linear servo.stl");
 }
 
 module pcb() {
@@ -57,12 +59,13 @@ module flag() {
 }
 
 module cover() {
-	t = 1.5;
 	difference() {
 		hull() {
 			cube([t,13+t*2,10+t]);
-			translate([29+t,13+t*2-5/2,-pcbt]) cylinder(d=5,h=10+t+pcbt);
-			translate([29+t,5/2,-pcbt]) cylinder(d=5,h=10+t+pcbt);
+			translate([29+t,13+t*2-5/2,-pcbt]) cylinder(d=5,h=0.1);
+			translate([29+t,13+t*2-5/2,10+t-5/2]) sphere(d=5);
+			translate([29+t,5/2,-pcbt]) cylinder(d=5,h=0.1);
+			translate([29+t,5/2,10+t-5/2]) sphere(d=5);
 		}
 		
 		translate([0,t+(13-10.5)/2,0]) cube([31,10.5,10.5]);
@@ -100,7 +103,7 @@ if( part == "flag" ) {
 	pcb();
 	translate([34.8,27.5,pcbt]) servo();
 	translate([.65,9,pcbt]) color("darkgray") interrupter();
-	translate([-0.75, 15.5, 6+pcbt+2]) flag();
+	color("red") translate([-0.75, 15.5, 6+pcbt+2]) flag();
 	color("gray")
 		translate([10,15.5,pcbt+7.9]) rotate([0,90,0]) cylinder(d=3,h=30);
 	%translate([0,7.7,pcbt]) cover();
