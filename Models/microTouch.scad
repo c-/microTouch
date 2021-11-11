@@ -1,4 +1,4 @@
-part = "all";	// [cover, flag]
+part = "flag";	// [cover, flag]
 
 pcbt = 1.6;
 t = 1.5;
@@ -46,12 +46,12 @@ module flag() {
 			hull() {
 				cube([h,w,7]);
 				ww = w*2;
-				translate([0,-(ww-w)/2,7]) cube([h,ww,0.1]);
+				translate([0,-(ww-w)/2,9]) cube([h,ww,0.1]);
 			}
 			
-			translate([0.1,0,8.5]) hull() {
-				translate([0,-(12-h)/2,0]) cylinder(d=h,h=7);
-				translate([0,(12-h)/2,0]) cylinder(d=h,h=7);
+			translate([0.1,0,10]) hull() {
+				translate([0,-(12-h)/2,0]) cylinder(d=h,h=5);
+				translate([0,(12-h)/2,0]) cylinder(d=h,h=5);
 			}
 		}
 		translate([0,0,12]) cylinder(d=3,h=20);
