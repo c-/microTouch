@@ -46,12 +46,12 @@ module flag() {
 			hull() {
 				cube([h,w,7]);
 				ww = w*2;
-				translate([0,-(ww-w)/2,9]) cube([h,ww,0.1]);
+				translate([0,-(ww-w)/2,11]) cube([h,ww,0.1]);
 			}
 			
-			translate([0.1,0,10]) hull() {
-				translate([0,-(12-h)/2,0]) cylinder(d=h,h=5);
-				translate([0,(12-h)/2,0]) cylinder(d=h,h=5);
+			translate([0.1,0,12]) hull() {
+				translate([0,-(12-h)/2,0]) cylinder(d=h,h=7);
+				translate([0,(12-h)/2,0]) cylinder(d=h,h=7);
 			}
 		}
 		translate([0,0,12]) cylinder(d=3,h=20);
@@ -68,11 +68,21 @@ module cover() {
 			translate([29+t,5/2,10+t-5/2]) sphere(d=5);
 		}
 		
+		// main cutout
 		translate([0,t+(13-10.5)/2,0]) cube([31,10.5,10.5]);
-		translate([6,-10,-pcbt]) cube([22,35,pcbt*3]);
+		
+		// clearance for passives and servo legs
+		hull() {
+			translate([7,-10,-pcbt]) cube([22,35,pcbt*3]);
+			translate([5,-10,-pcbt]) cube([22,35,0.1]);
+		}
 		translate([0,-10,-pcbt]) cube([31,35,pcbt]);
 
-		translate([27.5,t+2.5,-2]) cube([4,10,12.5]);	// gear clearance
+		// gear clearance
+		translate([27.5+2,t+4.5,-2]) hull() {
+			cylinder(d=4,h=12.5);
+			translate([0,10-4,0]) cylinder(d=4,h=12.5);
+		}
 		
 		translate([0,t,0]) difference() {
 			cube([7,13,10.5]);
@@ -88,9 +98,9 @@ module cover() {
 		}
 		
 		// slot for flag to slide along
-		translate([6.25,(13+t*2)/2,10.5-4.5/2]) rotate([0,90,0]) hull() {
-			translate([0,-(12.4-4.5)/2,0]) cylinder(d=4.5,h=17);
-			translate([0,(12.4-4.5)/2,0]) cylinder(d=4.5,h=17);
+		translate([6.5,(13+t*2)/2,10.5-4.5/2]) rotate([0,90,0]) hull() {
+			translate([0,-(12.4-4.5)/2,0]) cylinder(d=4.5,h=20);
+			translate([0,(12.4-4.5)/2,0]) cylinder(d=4.5,h=20);
 		}
 	}
 }
