@@ -1,11 +1,11 @@
-part = "cover";	// [cover, slider]
+part = "all";	// [cover, slider]
 
 pcbt = 1.6;
 t = 1.5;
 pind = 3;
 magnetd = 3;
 magneth = 3;
-screwd = 3;	// set screw
+screwd = 2;	// set screw
 
 $fn = 72;
 
@@ -20,17 +20,18 @@ module pcb() {
 module slider() {
 	w = 2;
 	h = 4;
+	slidelen = 14.5;
 	
 	rotate([0,90,0]) difference() {
 		union() {
 			translate([0.1,0,0]) hull() {
-				translate([0,-(12-h)/2,0]) cylinder(d=h,h=14);
-				translate([0,(12-h)/2,0]) cylinder(d=h,h=14);
+				translate([0,-(12-h)/2,0]) cylinder(d=h,h=slidelen);
+				translate([0,(12-h)/2,0]) cylinder(d=h,h=slidelen);
 			}
 		}
 		
 		// pin
-		translate([0,0,12]) cylinder(d=pind,h=20);
+		translate([0,0,slidelen-6]) cylinder(d=pind,h=slidelen);
 		
 		// magnet
 		translate([(h/2-magneth)+0.1,0,magnetd])
@@ -54,9 +55,15 @@ module cover() {
 			translate([29+t,13.5+t*2-fr,-pcbt])
 				cylinsphere(r=fr,h=10+t+pcbt);
 			translate([29+t,fr,-pcbt]) cylinsphere(r=fr,h=10+t+pcbt);
+			
 			translate([br-3.5,13.5+t*2-br,0])
 				cylinsphere(r=br,h=10+t);
 			translate([br-3.5,br,0]) cylinsphere(r=br,h=10+t);
+			
+			translate([-3.5,fr,10+t-fr])
+				rotate([0,90,0]) cylinder(r=fr,h=0.1);
+			translate([-3.5,13.5+t*2-fr,10+t-fr])
+				rotate([0,90,0]) cylinder(r=fr,h=0.1);
 		}
 		
 		// main cutout - ideally a friction fit to servo pcb
@@ -75,8 +82,12 @@ module cover() {
 			translate([0,10-4,0]) cylinder(d=4,h=8);
 		}
 		
+		// mounting bolt access hole
+		translate([-3.5+5.5, (13+t*2)/2-0.4, -5])
+			cylinder(d=3, h=20);
+		
 		// front hole
-		translate([25,7.75,8]) rotate([0,90,0]) cylinder(d=pind+0.5,h=10);
+		translate([25,(13+t*2)/2,8]) rotate([0,90,0]) cylinder(d=pind+0.5,h=10);
 
 		// set screw hole, should self-thread
 		translate([20,25,3]) 
@@ -92,8 +103,8 @@ module cover() {
 		// contained, but odds are someone will need to get a file in
 		// to smooth the track, and a back slot is by far the easiest.
 		translate([-10,(13+t*2)/2,8]) rotate([0,90,0]) hull() {
-			translate([0,-(12.5-4.5)/2,0]) cylinder(d=4.5,h=38);
-			translate([0,(12.5-4.5)/2,0]) cylinder(d=4.5,h=38);
+			translate([0,-(12.5-4.5)/2,0]) cylinder(d=4.8,h=38);
+			translate([0,(12.5-4.5)/2,0]) cylinder(d=4.8,h=38);
 		}
 	}
 }
@@ -104,9 +115,10 @@ if( part == "slider" ) {
 	cover();
 } else {
 	pcb();
-	translate([34.8,27.5,pcbt]) servo();
-	color("red") translate([-0.75, 15.5, 6+pcbt+2]) slider();
+//	translate([34.8,27.5,pcbt]) servo();
+	color("red") translate([-0.75, 15.75, 6+pcbt+2]) slider();
 	color("gray")
-		translate([10,15.5,pcbt+7.9]) rotate([0,90,0]) cylinder(d=3,h=25);
+		translate([10,15.75,pcbt+7.9]) rotate([0,90,0])
+			cylinder(d=pind-1,h=25);
 	%translate([0,7.7,pcbt]) cover();
 }
