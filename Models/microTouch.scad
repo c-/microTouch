@@ -1,11 +1,14 @@
-part = "all";	// [cover, slider]
+part = "backer";	// [cover, slider, backer]
 
 pcbt = 1.6;
 t = 1.5;
+backert = 1;
 pind = 3;
 magnetd = 3;
 magneth = 3;
-screwd = 2;	// set screw
+screwd = 2.8;	// set screw
+br = 5.084;	// back corner radius
+fr = 2.54;	// front corner radius
 
 $fn = 72;
 
@@ -47,11 +50,25 @@ module cylinsphere(r,h) {
 	}
 }
 
+module backer() {
+	difference() {
+		hull() {
+			translate([br-3.5,br,0]) cylinder(r=br,h=backert);
+			translate([-3.5,15.4,0]) cube([14,1,backert]);
+			translate([-3.5+14,0,0]) cube([0.1,1,backert]);
+		}
+		// mounting bolt
+		translate([-3.5+5.5, (13+t*2)/2-0.4, -.1])
+			cylinder(d=4, h=backert*2);
+		
+		// sensor pins
+		translate([5.8,4.8,-.1]) cube([3,6,backert*2]);
+	}
+}
+
 module cover() {
 	difference() {
 		hull() {
-			br = 5.084;
-			fr = 2.54;
 			translate([29+t,13.5+t*2-fr,-pcbt])
 				cylinsphere(r=fr,h=10+t+pcbt);
 			translate([29+t,fr,-pcbt]) cylinsphere(r=fr,h=10+t+pcbt);
@@ -113,6 +130,8 @@ if( part == "slider" ) {
 	slider();
 } else if( part == "cover" ) {
 	cover();
+} else if( part == "backer" ) {
+	backer();
 } else {
 	pcb();
 //	translate([34.8,27.5,pcbt]) servo();
@@ -121,4 +140,5 @@ if( part == "slider" ) {
 		translate([10,15.75,pcbt+7.9]) rotate([0,90,0])
 			cylinder(d=pind-1,h=25);
 	%translate([0,7.7,pcbt]) cover();
+	%translate([0,7.7,-backert]) backer();
 }
