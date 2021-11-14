@@ -2,7 +2,7 @@ part = "backer";	// [cover, slider, backer]
 
 pcbt = 1.6;
 t = 1.5;
-backert = 1;
+backert = 3;
 pind = 3;
 magnetd = 3;
 magneth = 3;
