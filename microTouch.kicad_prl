@@ -80,19 +80,7 @@
           "pos_x": 5,
           "pos_y": 48,
           "size_x": 1660,
-          "size_y": 951
-        }
-      },
-      {
-        "name": "microTouch.kicad_sch",
-        "open": false,
-        "window": {
-          "display": 0,
-          "maximized": true,
-          "pos_x": 0,
-          "pos_y": 55,
-          "size_x": 1828,
-          "size_y": 1136
+          "size_y": 876
         }
       }
     ]
