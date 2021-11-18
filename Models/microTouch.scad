@@ -4,11 +4,12 @@ pcbt = 1.6;
 t = 1.5;
 backert = 3;
 pind = 3;
-magnetd = 3;
+magnetd = 3.5;
 magneth = 3;
 br = 5.084;	// back corner radius
 fr = 2.54;	// front corner radius
 tabw = 7;	// bolt tab/spacer width
+slidelen = 17;
 
 
 $fn = 72;
@@ -24,7 +25,6 @@ module pcb() {
 module slider() {
 	w = 2;
 	h = 4;
-	slidelen = 14.5;
 	
 	rotate([0,90,0]) difference() {
 		union() {
@@ -85,10 +85,10 @@ module cover() {
 				rotate([0,90,0]) cylinder(r=fr,h=0.1);
 		}
 		
-		// main cutout - ideally a friction fit to servo pcb
+		// main cutout
 		difference() {
 			union() {
-				translate([-t,t+(bwid-10.25)/2,0]) cube([31,10.25,8]);
+				translate([-t,t+(bwid-12)/2,0]) cube([31,12,8]);
 
 				// a little extra clearance for the passives
 				translate([-t,t+(bwid-12)/2,0]) cube([14,12,2.4]);
@@ -100,16 +100,15 @@ module cover() {
 		}
 		
 		// clearance for servo "legs" and fasteners
-		translate([9.25,-10,-pcbt]) cube([4,35,pcbt*2.5]);
-		translate([24.75,-10,-pcbt]) cube([4,35,pcbt*2.5]);
+		translate([9,-10,-pcbt]) cube([20,35,pcbt*2.5]);
 		
 		// base clearance - slight friction fit would be good here
 		translate([-3.5,-10,-pcbt]) cube([34.5,35,pcbt]);
 
 		// gear clearance
-		translate([27.5+2,t+4.5,0]) hull() {
-			cylinder(d=4,h=8);
-			translate([0,10-4,0]) cylinder(d=4,h=8);
+		translate([27.5+1.5,t+4.5,0]) hull() {
+			cylinder(d=5,h=10);
+			translate([0,10-3,0]) cylinder(d=5,h=10);
 		}
 		
 		// mounting bolt access hole
@@ -121,7 +120,7 @@ module cover() {
 			cylinder(d=pind+0.5,h=10);
 
 		// servo arm clearance and slider viewport
-		translate([14,10,0]) hull() {
+		translate([14,10.5,0]) hull() {
 			cylinder(d=4,h=10+t);
 			translate([11,0,0]) cylinder(d=4,h=10+t);
 		}
@@ -144,7 +143,7 @@ if( part == "slider" ) {
 	backer();
 } else {
 	*pcb();
-//	translate([34.8,27.5,pcbt]) servo();
+   translate([34.8,27.5,pcbt]) servo();
 	color("red") translate([-0.75, 15.75, 6+pcbt+2]) slider();
 	color("gray")
 		translate([10,15.75,pcbt+7.9]) rotate([0,90,0])
