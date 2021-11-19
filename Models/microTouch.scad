@@ -1,4 +1,4 @@
-part = "cover";	// [cover, slider, backer]
+part = "all";	// [cover, slider, backer]
 
 pcbt = 1.6;
 t = 1.5;
@@ -9,7 +9,7 @@ magneth = 3;
 br = 5.084;	// back corner radius
 fr = 2.54;	// front corner radius
 tabw = 7;	// bolt tab/spacer width
-slidelen = 17;
+slidelen = 14.5;
 
 
 $fn = 72;
