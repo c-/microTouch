@@ -1,4 +1,4 @@
-part = "all";	// [cover, slider, backer]
+part = "cover";	// [cover, slider, backer]
 
 pcbt = 1.6;
 t = 1.5;
@@ -10,7 +10,6 @@ br = 5.084;	// back corner radius
 fr = 2.54;	// front corner radius
 tabw = 7;	// bolt tab/spacer width
 slidelen = 14.5;
-
 
 $fn = 72;
 
@@ -78,11 +77,6 @@ module cover() {
 			translate([br-3.5,bwid+t*2-br,0])
 				cylinsphere(r=br,h=10+t);
 			translate([br-3.5,br,0]) cylinsphere(r=br,h=10+t);
-			
-			translate([-3.5,fr,10+t-fr])
-				rotate([0,90,0]) cylinder(r=fr,h=0.1);
-			translate([-3.5,bwid+t*2-fr,10+t-fr])
-				rotate([0,90,0]) cylinder(r=fr,h=0.1);
 		}
 		
 		// main cutout
@@ -103,7 +97,15 @@ module cover() {
 		translate([9,-10,-pcbt]) cube([20,35,pcbt*2.5]);
 		
 		// base clearance - slight friction fit would be good here
-		translate([-3.5,-10,-pcbt]) cube([34.5,35,pcbt]);
+		translate([-3.5,-10,-pcbt]) cube([32,35,pcbt]);
+		
+		// this cutout follows the contour of the PCB and helps prevent it
+		// from rotation around the mounting bolt
+		translate([32-3.5,0,-pcbt])
+		hull() {
+			translate([0,fr,0]) cylinder(r=fr+.25,h=pcbt);
+			translate([0,bwid+t*2-fr,0]) cylinder(r=fr+.25,h=pcbt);
+		}
 
 		// gear clearance
 		translate([27.5+1.5,t+4.5,0]) hull() {
@@ -125,9 +127,8 @@ module cover() {
 			translate([11,0,0]) cylinder(d=4,h=10+t);
 		}
 		
-		// track for slider. In an ideal world this would be entirely
-		// contained, but odds are someone will need to get a file in
-		// to smooth the track, and a back slot is by far the easiest.
+		// track for slider. Aside from where the slider is inserted,
+		// it's useful for smoothing things with a file.
 		translate([-10,(bwid+t*2)/2,8]) rotate([0,90,0]) hull() {
 			translate([0,-(12.5-4.5)/2,0]) cylinder(d=4.8,h=38);
 			translate([0,(12.5-4.5)/2,0]) cylinder(d=4.8,h=38);
@@ -142,7 +143,7 @@ if( part == "slider" ) {
 } else if( part == "backer" ) {
 	backer();
 } else {
-	*pcb();
+	pcb();
    translate([34.8,27.5,pcbt]) servo();
 	color("red") translate([-0.75, 15.75, 6+pcbt+2]) slider();
 	color("gray")
