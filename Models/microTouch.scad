@@ -1,6 +1,7 @@
-part = "all";	// [cover, slider, backer]
+part = "cover";	// [cover, slider, backer]
 
 pcbt = 1.6;
+bextra = 0; // pcbt;
 t = 1.5;
 backert = 3;
 pind = 3;
@@ -87,18 +88,20 @@ module cover() {
 	bwid = 13.5;
 	difference() {
 		hull() {
-			translate([30+t,bwid+t*2-fr,-pcbt])
-				cylinsphere(r=fr,h=10+t+pcbt);
-			translate([30+t,fr,-pcbt]) cylinsphere(r=fr,h=10+t+pcbt);
+			translate([30,bwid+t*2-fr,-pcbt-bextra])
+				cylinsphere(r=fr+t,h=10+t+pcbt+bextra);
+			translate([30,fr,-pcbt-bextra])
+				cylinsphere(r=fr+t,h=10+t+pcbt+bextra);
 			
-			translate([br-3.5,bwid+t*2-br,0])
-				cylinsphere(r=br,h=10+t);
-			translate([br-3.5,br,0]) cylinsphere(r=br,h=10+t);
+			translate([br-3.5-t,bwid+t*3-br,-pcbt-bextra])
+				cylinsphere(r=br,h=10+t+pcbt+bextra);
+			translate([br-3.5,br,-pcbt-bextra])
+				cylinsphere(r=br+t,h=10+t+pcbt+bextra);
 			
-			translate([-3.5,fr,10+t-fr])
-				rotate([0,90,0]) cylinder(r=fr,h=0.1);
-			translate([-3.5,bwid+t*2-fr,10+t-fr])
-				rotate([0,90,0]) cylinder(r=fr,h=0.1);
+			translate([-3.5-t,fr,10-fr])
+				rotate([0,90,0]) cylinder(r=fr+t,h=0.1);
+			translate([-3.5-t,bwid+t*2-fr,10-fr])
+				rotate([0,90,0]) cylinder(r=fr+t,h=0.1);
 		}
 		
 		// main cutout
@@ -132,20 +135,34 @@ module cover() {
 		}
 		
 		// clearance for servo "legs" and fasteners
-		hull() {
-			translate([9,-10,-pcbt]) cube([20,35,pcbt*2.5]);
-			translate([9-2.5,-10,-pcbt]) cube([22.5,35,pcbt]);
+		translate([0,-0.5,-pcbt-0.1]) hull() {
+			translate([9,0,0]) cube([20,17.1,pcbt*2.5]);
+			translate([9-2.5,0,0]) cube([22.5,17.1,pcbt]);
 		}
 		
-		// base clearance - slight friction fit would be good here
-		translate([-3.5,-10,-pcbt]) cube([32,35,pcbt]);
-		
-		// this cutout follows the contour of the PCB and helps prevent it
-		// from rotating around the mounting bolt
-		translate([32-3.25,0,-pcbt])
-		hull() {
-			translate([0,fr,0]) cylinder(r=fr+.25,h=pcbt);
-			translate([0,bwid+t*2-fr,0]) cylinder(r=fr+.25,h=pcbt);
+		// this cutout follows the contour of the PCB. Doesn't need to be
+		// perfect, just cutting out a pocket.
+		// (FIXME: should just load the PCB as a DXF or something)
+		translate([0,0,-pcbt*3+0.1])
+		difference() {
+			e = 0.5;
+			hull() {
+				translate([32-3,fr,0]) cylinder(r=fr+e,h=pcbt*3);
+				translate([32-3,bwid+t*2-fr,0]) cylinder(r=fr+e,h=pcbt*3);
+				translate([br-3.5,bwid+t*2-br+6.4,0])
+					cylinder(r=br+e,h=pcbt*3);
+				translate([br-3.5+8.4,bwid+t*2-br+6.4,0])
+					cylinder(r=br+e,h=pcbt*3);
+				translate([br-3.5,br-0.25,0]) cylinder(r=br+e,h=pcbt*3);
+			}
+			hull() {
+				translate([br-3.5+15,bwid+t*2-br+6.5,0])
+					cylinder(r=2-e,h=pcbt*3);
+				translate([br-3.5+32,bwid+t*2-br+7,0])
+					cylinder(r=2,h=pcbt*3);
+				translate([br-3.5+15,bwid+t*2-br+12,0])
+					cylinder(r=2,h=pcbt*3);
+			}
 		}
 
 		// extra gear clearance
