@@ -10,7 +10,9 @@ magneth = 3;
 br = 5.084;	// back corner radius
 fr = 2.54;	// front corner radius
 tabw = 7;	// bolt tab/spacer width
-slidelen = 14.5;
+magnetoffset = 15;
+slidelen = magnetoffset + magnetd/2 + 1;
+slidew = 12;
 
 // M3 heat set insert for mounting screw, or just M3
 // diameter if you want to try threading it directly
@@ -27,6 +29,15 @@ module pcb() {
 	color("green") translate([-8.254,-20.254,pcbt/2]) import("microTouch.stl");
 }
 
+
+module cylinsphere(r,d,h) {
+	r = r ? r : d/2;
+	hull() {
+		cylinder(r=r,h=0.1);
+		translate([0,0,h-r]) sphere(r=r);
+	}
+}
+
 module slider() {
 	w = 2;
 	h = 4;
@@ -34,24 +45,23 @@ module slider() {
 	rotate([0,90,0]) difference() {
 		union() {
 			translate([0.1,0,0]) hull() {
-				translate([0,-(12-h)/2,0]) cylinder(d=h,h=slidelen);
-				translate([0,(12-h)/2,0]) cylinder(d=h,h=slidelen);
+				// taper the body to help prevent binding
+				translate([0,-(slidew-h)/2,slidelen*.66])
+					cylinsphere(d=h,h=slidelen/3);
+				translate([0,(slidew-h)/2,slidelen*.66])
+					cylinsphere(d=h,h=slidelen/3);
+				translate([0,-(slidew-2-h)/2,0]) cylinsphere(d=h,h=slidelen);
+				translate([0,(slidew-2-h)/2,0]) cylinsphere(d=h,h=slidelen);
 			}
 		}
 		
 		// pin
-		translate([0,0,slidelen-6]) cylinder(d=pind,h=slidelen);
+		translate([0,0,slidelen/2]) cylinder(d=pind,h=slidelen);
 		
-		// magnet
-		translate([(h/2-magneth)+0.1,0,magnetd])
-			rotate([0,90,0]) cylinder(d=magnetd,h=magneth);
-	}
-}
-
-module cylinsphere(r,h) {
-	hull() {
-		cylinder(r=r,h=0.1);
-		translate([0,0,h-r]) sphere(r=r);
+		// magnet. making it a through hole means someone can
+		// flip it if they screw up polarity
+		translate([-h,0,slidelen-magnetoffset])
+			rotate([0,90,0]) cylinder(d=magnetd,h=h*2);
 	}
 }
 
@@ -88,19 +98,21 @@ module cover() {
 	bwid = 13.5;
 	difference() {
 		hull() {
+			h = 11;
+			
 			translate([30,bwid+t*2-fr,-pcbt-bextra])
-				cylinsphere(r=fr+t,h=10+t+pcbt+bextra);
+				cylinsphere(r=fr+t,h=h+t+pcbt+bextra);
 			translate([30,fr,-pcbt-bextra])
-				cylinsphere(r=fr+t,h=10+t+pcbt+bextra);
+				cylinsphere(r=fr+t,h=h+t+pcbt+bextra);
 			
 			translate([br-3.5-t,bwid+t*3-br,-pcbt-bextra])
-				cylinsphere(r=br,h=10+t+pcbt+bextra);
+				cylinsphere(r=br,h=h+t+pcbt+bextra);
 			translate([br-3.5,br,-pcbt-bextra])
-				cylinsphere(r=br+t,h=10+t+pcbt+bextra);
+				cylinsphere(r=br+t,h=h+t+pcbt+bextra);
 			
-			translate([-3.5-t,fr,10-fr])
+			translate([-3.5-t,fr,h-fr])
 				rotate([0,90,0]) cylinder(r=fr+t,h=0.1);
-			translate([-3.5-t,bwid+t*2-fr,10-fr])
+			translate([-3.5-t,bwid+t*2-fr,h-fr])
 				rotate([0,90,0]) cylinder(r=fr+t,h=0.1);
 		}
 		
@@ -110,17 +122,18 @@ module cover() {
 //				// This needs to go just far enough back to
 				// clear the hall sensor
 				hull() {
-					translate([-t+29,t+(bwid-12)/2,0]) rcube([3,12,8],cornerr=3);
-					translate([t+9.5,t+bwid/2,0]) cylinder(d=12,h=8);
+					translate([-t+29,t+(bwid-12)/2,0]) rcube([3,12,0.1],cornerr=3);
+					translate([-t+29,t+(bwid-12)/2+1,8]) rcube([3,10,.1],cornerr=3);
+					translate([t+9.5,t+bwid/2,0]) cylinder(d1=12,d2=10,h=8);
 				}
 
 				// clearance for the passives around the
 				// mounting hole
 				difference() {
 					hull() {
-						translate([-t+14,t+(bwid-12)/2,0]) cube([11,12,2.4]);
-						translate([t+2-br/2,t-1-br/2+bwid/2,0]) cylinder(d=br,h=2.4);
-						translate([t+2-br/2,t+1+br/2+bwid/2,0]) cylinder(d=br,h=2.4);
+						translate([-t+14,t+(bwid-12)/2,0]) cube([11,12,2.3]);
+						translate([t+2-br/2,t-1-br/2+bwid/2,0]) cylinder(d=br,h=2.3);
+						translate([t+2-br/2,t+1+br/2+bwid/2,0]) cylinder(d=br,h=2.3);
 					}
 					
 					// want the mounting hole supported flush to the board
@@ -166,9 +179,9 @@ module cover() {
 		}
 
 		// extra gear clearance
-		translate([28.5+1.5,t+4.5,0]) hull() {
-			translate([0,-2,10]) mirror([0,0,1]) cylinsphere(h=9,r=2.5);
-			translate([0,10-3,10]) mirror([0,0,1]) cylinsphere(h=9, r=2.5);
+		translate([28.5+1.5,t+4.5,-pcbt-0.1]) hull() {
+			translate([0,-2,10]) mirror([0,0,1]) cylinder(h=10,r=2.5);
+			translate([0,10-3,10]) mirror([0,0,1]) cylinder(h=10, r=2.5);
 		}
 		
 		// hole for mounting from the back. This shouldn't go all the way
@@ -177,13 +190,13 @@ module cover() {
 			cylinder(d=insertd, h=pcbt+insertl-1);
 		
 		// front hole
-		translate([25,(bwid+t*2)/2,8]) rotate([0,90,0])
+		translate([25,(bwid+t*2)/2,8.5]) rotate([0,90,0])
 			cylinder(d=pind+0.5,h=10);
 
 		// servo arm clearance and slider viewport
 		translate([14,10.25,0]) hull() {
-			cylinder(d=4,h=10+t);
-			translate([11,0,0]) cylinder(d=4,h=10+t);
+			cylinder(d=4,h=12+t);
+			translate([11,0,0]) cylinder(d=4,h=12+t);
 		}
 		
 		// give the connector just a hair of play
@@ -191,9 +204,9 @@ module cover() {
 		
 		// track for slider. Aside from where the slider is inserted,
 		// it's useful for smoothing things with a file.
-		translate([-10,(bwid+t*2)/2,7.5]) rotate([0,90,0]) hull() {
-			translate([0,-(12.5-4.5)/2,0]) cylinder(d=5.2,h=38);
-			translate([0,(12.5-4.5)/2,0]) cylinder(d=5.2,h=38);
+		translate([-10,(bwid+t*2)/2,7.75]) rotate([0,90,0]) hull() {
+			translate([0,-(12-4.5)/2,0]) cylinder(d=5.5,h=38);
+			translate([0,(12-4.5)/2,0]) cylinder(d=5.5,h=38);
 		}
 	}
 }
