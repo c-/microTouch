@@ -191,7 +191,10 @@ module cover() {
 		
 		// front hole
 		translate([25,(bwid+t*2)/2,8.5]) rotate([0,90,0])
-			cylinder(d=pind+0.5,h=10);
+			hull() {
+				cylinder(d=pind+1,h=10);
+				translate([1,0,0]) cylinder(d=pind+1,h=10);
+			}
 
 		// servo arm clearance and slider viewport
 		translate([14,10.25,0]) hull() {
