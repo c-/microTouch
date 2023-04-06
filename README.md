@@ -21,7 +21,8 @@ The size of the PCB is approximately 35mm x 25mm, and the shell will add
 another 10mm or so. It should comfortably fit in the space needed by
 a BLTouch.
 
-I'm fairly confident there's room to crunch the design down even smaller.
+I think there's room to crunch the design down even smaller, but I'm not
+sure there's any need for a nanoTouch.
 
 # Bill Of Materials
 
@@ -62,12 +63,13 @@ the position of the problem, along with the servo angles.
 
 ![All the parts](Images/parts.jpg)
 
-You then need to remove the wires from the servo.
+Remove the wires from the servo.
 
 ![Servo wirectomy](Images/servo_mod.jpg)
 
 Do this by scraping away the glue at the PCB, then desolder the wires and
-touch up the pads with fresh solder.
+touch up the pads with fresh solder. Don't overbuild solder on the pads,
+they should be somewhat flat.
 
 Solder the components. See the Interactive bom for details of what goes
 where. Do the surface mount components first or you'll find things get
