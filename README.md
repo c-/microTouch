@@ -5,8 +5,9 @@ Compact 3D printer bed probe based (very) loosely on the
 
 ![microTouch In Action](Images/inaction.gif)
 
-I designed and built the first prototype a couple years ago and have been
-testing it since, and it's been remarkably reliable.
+I designed and built the first prototype a couple years ago. The current
+version has been running since (approximately) May 2022 and has been
+quite reliable, with only one misfire that I can remember.
 
 # Design
 
