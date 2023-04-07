@@ -41,6 +41,7 @@ then you'll need to cut the solder jumper on the back.
  * 10uF, 100nF 0805 capacitors
  * 4.7K 0805 resistors
  * 0805 red LED (other colors probably work, but I've only tested red)
+ * 3x2mm rare earth magnet
 
 You'll need a PCB. It *can* be homemade (I made the first version on a PCB
 mill), but you'll have a battle with the servo pads. I ordered my finished
@@ -53,7 +54,8 @@ mount to your printer.  I printed the slider with
 [Igus iglide I150-PF](https://www.igus.com/product/12404),
 but probably anything would work okay. The slider and the body need to be
 sanded to ensure smooth deployment, and getting that right is by far the
-most finicky part of the job.
+most finicky part of the job. You'll probably have to drill the slider hole
+larger to hold the magnet (a press fit is enough).
 
 For the probe itself I use a M3 bolt (25mm, I think?), but anything you can
 thread into the slider body should be fine as long as it has some weight to
