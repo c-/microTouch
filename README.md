@@ -107,6 +107,12 @@ back.
 
 ![Mechanical Assembly](Images/slider_assembly.jpg)
 
+This would be a good time to run a test before installing it. I use an
+Arduino Nano (there's a test script) to run it through its paces. In
+particular, you might have to flip the magnet and give the hall sensor a
+slight bend in one direction or another. Take note of the deploy/stow
+angles for your firmware configuration.
+
 Then attach it to your printer. Mine is attached through a hole in the back
 of my X carriage.
 
